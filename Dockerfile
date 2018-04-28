@@ -8,7 +8,8 @@ ARG USER_HOME_DIR="/root"
 ARG SHA=b52956373fab1dd4277926507ab189fb797b3bc51a2a267a193c931fffad8408
 ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
 
-RUN apt update && \
+RUN adduser --system --shell /bin/bash --disabled-password --disabled-login user && \
+      apt update && \
       apt install -y curl gnupg ca-certificates xz-utils && \
       mkdir -p /opt && \
       tar xf /data/serverjre-9.0.4_linux-x64_bin.tar.gz -C /opt && \
@@ -70,3 +71,5 @@ RUN set -ex \
       && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
 ENV PATH ${JAVA_HOME}/bin:${MAVEN_HOME}/bin:$PATH
+
+WORKDIR /home/user
