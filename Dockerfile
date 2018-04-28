@@ -23,7 +23,6 @@ RUN adduser --system --shell /bin/bash --disabled-password --disabled-login user
 
 ENV JAVA_HOME /opt/jdk-9.0.4
 ENV MAVEN_HOME /usr/share/maven
-ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
 # From this repo: https://github.com/nodejs/docker-node/
 ENV NODE_VERSION 9.11.1
