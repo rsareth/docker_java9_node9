@@ -2,6 +2,7 @@ FROM ubuntu:xenial
 
 COPY serverjre-9.0.4_linux-x64_bin.tar.gz /data/
 
+# From this repo: https://github.com/carlossg/docker-maven
 ARG MAVEN_VERSION=3.5.3
 ARG USER_HOME_DIR="/root"
 ARG SHA=b52956373fab1dd4277926507ab189fb797b3bc51a2a267a193c931fffad8408
@@ -23,6 +24,7 @@ ENV JAVA_HOME /opt/jdk-9.0.4
 ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
+# From this repo: https://github.com/nodejs/docker-node/
 ENV NODE_VERSION 9.11.1
 
 RUN set -ex \
