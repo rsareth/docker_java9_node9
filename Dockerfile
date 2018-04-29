@@ -1,4 +1,4 @@
-FROM maven:3-jdk-9
+FROM maven:3-jdk-9-slim
 
 RUN adduser --system --shell /bin/bash --disabled-password --disabled-login user && \
       apt update && \
