@@ -2,7 +2,7 @@ FROM maven:3-jdk-9-slim
 
 RUN adduser --system --shell /bin/bash --disabled-password --disabled-login user && \
       apt update && \
-      apt install -y curl gnupg ca-certificates xz-utils chromium && \
+      apt install -y curl gnupg ca-certificates xz-utils chromium awscli && \
       cd /usr/bin && \
       ln -sf chromium chromium-browser
 
