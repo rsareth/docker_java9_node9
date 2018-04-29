@@ -1,28 +1,8 @@
-FROM ubuntu:xenial
-
-COPY serverjre-9.0.4_linux-x64_bin.tar.gz /data/
-
-# From this repo: https://github.com/carlossg/docker-maven
-ARG MAVEN_VERSION=3.5.3
-ARG USER_HOME_DIR="/root"
-ARG SHA=b52956373fab1dd4277926507ab189fb797b3bc51a2a267a193c931fffad8408
-ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
+FROM maven:3-jdk-9
 
 RUN adduser --system --shell /bin/bash --disabled-password --disabled-login user && \
       apt update && \
-      apt install -y curl gnupg ca-certificates xz-utils && \
-      mkdir -p /opt && \
-      tar xf /data/serverjre-9.0.4_linux-x64_bin.tar.gz -C /opt && \
-      rm /data/serverjre-9.0.4_linux-x64_bin.tar.gz && \
-      mkdir -p /usr/share/maven /usr/share/maven/ref && \
-      curl -fsSL -o /tmp/apache-maven.tar.gz ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
-      echo "${SHA} /tmp/apache-maven.tar.gz" | sha256sum -c - && \
-      tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 && \
-      rm -f /tmp/apache-maven.tar.gz && \
-      ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
-
-ENV JAVA_HOME /opt/jdk-9.0.4
-ENV MAVEN_HOME /usr/share/maven
+      apt install -y curl gnupg ca-certificates xz-utils chromium
 
 # From this repo: https://github.com/nodejs/docker-node/
 ENV NODE_VERSION 9.11.1
