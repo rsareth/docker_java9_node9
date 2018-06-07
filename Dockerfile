@@ -2,7 +2,8 @@ FROM maven:3-jdk-9-slim
 
 RUN adduser --system --shell /bin/bash --disabled-password --disabled-login user && \
       apt update && \
-      apt install -y curl gnupg ca-certificates xz-utils chromium awscli && \
+      apt install -y curl gnupg ca-certificates xz-utils chromium awscli \
+                      apt-transport-https software-properties-common gnupg2 && \
       cd /usr/bin && \
       ln -sf chromium chromium-browser
 
@@ -50,6 +51,14 @@ RUN set -ex \
       && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
       && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
       && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
+
+# Install docker
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+      apt-key fingerprint 0EBFCD88 && \
+      # It is a huge dirty patch because we are using a debian sid. So, in the future, it might fail.
+      add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable" && \
+      apt update && \
+      apt install -y docker-ce
 
 ENV PATH ${JAVA_HOME}/bin:${MAVEN_HOME}/bin:$PATH
 
